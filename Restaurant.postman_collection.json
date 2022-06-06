@@ -1,0 +1,393 @@
+{
+	"info": {
+		"_postman_id": "3926c4b8-90a6-4ebb-b858-193c86b62f3e",
+		"name": "Restaurant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20357946"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "agustin",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "jojo321",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Todos Los Usuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "agustin",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "jojo321",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Un Usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "agustin",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "jojo321",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/ACORIA",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"ACORIA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "ACORIA",
+									"type": "text"
+								},
+								{
+									"key": "nuevaClave",
+									"value": "124jdoqp",
+									"type": "text"
+								},
+								{
+									"key": "perfil",
+									"value": "socio",
+									"type": "text"
+								},
+								{
+									"key": "id_empleado",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desactivar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "ACORIA",
+									"type": "text"
+								},
+								{
+									"key": "nuevaClave",
+									"value": "124jdoqp",
+									"type": "text"
+								},
+								{
+									"key": "perfil",
+									"value": "socio",
+									"type": "text"
+								},
+								{
+									"key": "id_empleado",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/desactivar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"desactivar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reactivar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "ACORIA",
+									"type": "text"
+								},
+								{
+									"key": "nuevaClave",
+									"value": "124jdoqp",
+									"type": "text"
+								},
+								{
+									"key": "perfil",
+									"value": "socio",
+									"type": "text"
+								},
+								{
+									"key": "id_empleado",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/reactivar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"reactivar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JWT",
+			"item": [
+				{
+					"name": "Crear Token Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "acoria",
+									"type": "text"
+								},
+								{
+									"key": "perfil",
+									"value": "user",
+									"type": "text"
+								},
+								{
+									"key": "alias",
+									"value": "cesni186",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/jwt/crearToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"jwt",
+								"crearToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "devolver payload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTQ1NTMwOTUsImV4cCI6MTY1NDYxMzA5NSwiYXVkIjoiOWE2YWI1YzI0Y2IzNTY1ZTUyZjQzNmVlNTU0Nzk1NTQ3MjAyNDIwMSIsImRhdGEiOnsidXN1YXJpbyI6ImFjb3JpYSIsInBlcmZpbCI6InVzZXIiLCJhbGlhcyI6ImNlc25pMTg2In0sImFwcCI6IlRlc3QgSldUIn0.7rnEbkIhNnqBmhlvXVEKLXgIIUjhjClELq3UsymTwg8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/jwt/devolverPayLoad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"jwt",
+								"devolverPayLoad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "devolver data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTQ1NTMwOTUsImV4cCI6MTY1NDYxMzA5NSwiYXVkIjoiOWE2YWI1YzI0Y2IzNTY1ZTUyZjQzNmVlNTU0Nzk1NTQ3MjAyNDIwMSIsImRhdGEiOnsidXN1YXJpbyI6ImFjb3JpYSIsInBlcmZpbCI6InVzZXIiLCJhbGlhcyI6ImNlc25pMTg2In0sImFwcCI6IlRlc3QgSldUIn0.7rnEbkIhNnqBmhlvXVEKLXgIIUjhjClELq3UsymTwg8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/jwt/devolverDatos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"jwt",
+								"devolverDatos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verificar token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTQ1NTMwOTUsImV4cCI6MTY1NDYxMzA5NSwiYXVkIjoiOWE2YWI1YzI0Y2IzNTY1ZTUyZjQzNmVlNTU0Nzk1NTQ3MjAyNDIwMSIsImRhdGEiOnsidXN1YXJpbyI6ImFjb3JpYSIsInBlcmZpbCI6InVzZXIiLCJhbGlhcyI6ImNlc25pMTg2In0sImFwcCI6IlRlc3QgSldUIn0.7rnEbkIhNnqBmhlvXVEKLXgIIUjhjClELq3UsymTwg8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/jwt/verificarToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"jwt",
+								"verificarToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
