@@ -1,41 +1,83 @@
 <?php
 require_once './models/Usuario.php';
 require_once './interfaces/IApiUsable.php';
+require_once './functions/validateKeys.php';
+require_once './functions/validateValues.php';
+require_once './exceptions/perfilInvalidoException.php';
+require_once './exceptions/claveInvalidaException.php';
+require_once './errors/errorMessages.php';
+require_once './interfaces/IApiSoftUsable.php';
+
+
+use \App\Models\Usuario as Usuario;
 
 /**
  * UsuarioController
  * 
  * @SuppressWarnings(PHPMD)
  */
-class UsuarioController extends Usuario implements IApiUsable
+class UsuarioController implements IApiUsable, IApiSoftUsable
 {
     public function cargarUno($request, $response, $args)
     {
-        $parametros = $request->getParsedBody();
+      $parametros = $request->getParsedBody();
 
-        $usuario = $parametros['usuario'];
-        $clave = $parametros['clave'];
-        $perfil = $parametros['perfil'];
-        $id_empleado = $parametros['id_empleado'];
+        if(array_keys_exist(['usuario','clave','email','perfil'],$parametros)){
 
-        // Creamos el usuario
-        $usr = new Usuario($usuario, $clave, $perfil, $id_empleado);
-        
-        $id = $usr->crearUsuario();
+          $usuario = $parametros['usuario'];
+          
+          $usuarioExistente = Usuario::withTrashed()->firstWhere('usuario',$usuario);
 
-        $payload = json_encode(array("mensaje" => "Usuario creado con exito ${id}"));
+          //si no existe:
+          if(!isset($usuarioExistente)){
 
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
+            $clave = $parametros['clave'];
+            $email = $parametros['email'];
+            $perfil = $parametros['perfil'];
+
+            if (validarClave($clave) && validarPerfil($perfil)){
+              // Creamos el usuario
+              $usr = new Usuario();
+              $usr->usuario = $usuario;
+              $usr->clave = password_hash($parametros['clave'], PASSWORD_DEFAULT);
+              $usr->email = $email;
+              $usr->perfil = $perfil;
+
+              if(isset($parametros['id_empleado'])){
+                $usr->id_empleado = $parametros['id_empleado'];
+              }           
+              
+              $usr->save();
+
+              $payload = json_encode(array("mensaje" => "Usuario creado con exito", "id de usuario" => $usr->id));
+
+            } else {
+              $payload = json_encode(array("mensaje" => "Clave o perfil inválidos"));   
+            }    
+
+          } else  {
+            $payload = json_encode(array("mensaje" => "El Usuario ya existe"));            
+          }
+        } else {
+          $payload = json_encode(array("mensaje" => "Parámetros inválidos"));
+        }
+
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
     }
 
     public function traerUno($request, $response, $args)
     {
         // Buscamos usuario por nombre
-        $usr = $args['usuario'];
-        $usuario = Usuario::obtenerUsuario($usr);
-        $payload = json_encode($usuario);
+        $usuario = $args['usuario'];
+        $usr = Usuario::firstWhere('usuario',$usuario);
+
+        if(isset($usr)){
+          $payload = json_encode($usr);
+        } else {
+          $payload = json_encode(array("mensaje" => "El usuario no existe"));
+        }
 
         $response->getBody()->write($payload);
         return $response
@@ -44,8 +86,9 @@ class UsuarioController extends Usuario implements IApiUsable
 
     public function traerTodos($request, $response, $args)
     {
-        $lista = Usuario::obtenerTodos();
-        $payload = json_encode(array("listaUsuario" => $lista));
+        $lista = Usuario::all();
+
+        $payload = json_encode(array("listaUsuarios" => $lista));
 
         $response->getBody()->write($payload);
         return $response
@@ -54,32 +97,85 @@ class UsuarioController extends Usuario implements IApiUsable
     
     public function modificarUno($request, $response, $args)
     { 
-        parse_str(file_get_contents("php://input"),$put_vars);
-        
-        $usuario = $put_vars['usuario'];
-        $nuevaClave = $put_vars['nuevaClave'];
-        $perfil = $put_vars['perfil'];
-        $id_empleado = $put_vars['id_empleado'];
+      $parametros = $request->getParsedBody();
 
-        Usuario::modificarPerfil($usuario, $perfil);
-        Usuario::modificarClave($usuario, $nuevaClave);
-        Usuario::modificarIdEmpleado($usuario, $id_empleado);
+      $usuarioId = $parametros['id'];
 
-        $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
+      // Conseguimos el objeto
+      $usr = Usuario::firstWhere('id',$usuarioId);
+  
+      // Si existe
+      if (isset($usr)) {
+        $parametrosPermitidos = array('clave', 'perfil', 'id_empleado', 'email');
 
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
+        // si la clave es inválida tendremos una exepción y no modificaremos el usuario.
+        try {        
+        //por cada parámetro recibido
+          foreach ($parametros as $key => $value) {
+
+            // si el parámetro es uno de los permitidos, modificamos su valor.
+            if(in_array($key,$parametrosPermitidos)){
+
+              //si es un cambio de clave, validaremos la clave
+              switch ($key) {
+                case 'clave':
+                  //validar clave
+                  if (!validarClave($value)){
+                    throw new claveInvalidaException(getClaveError());
+                  }
+                  // si la clave es válida, la modificamos
+                  $usr->clave = password_hash($value, PASSWORD_DEFAULT);
+                  break;
+                case 'perfil':
+                  // validar perfil
+                  if(validarPerfil($value)){
+                    $usr->perfil = $value;
+                  } else {
+                    throw new perfilInvalidoException("perfil inválido");
+                  }
+                  break;
+                default:
+                  $usr[$key] = $value;
+                  break;
+              }
+            }            
+          }
+          $usr->save();
+          $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
+        } catch (Exception $ex) {
+          // si la clave o el perfil no son válidos, cancelar modificación.
+          $payload = json_encode(array("mensaje" => $ex->__toString()));
+        }
+      } else {
+        //El usuario no existe
+        $payload = json_encode(array("mensaje" => "Usuario no encontrado"));
+      }
+  
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
     }
 
-    public function borrarUno($request, $response, $args)
+    public function desactivarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 
-        $usuario = $parametros['usuario'];
-        Usuario::darDeBajaUsuario($usuario);
+        $id = $parametros['id'];
 
-        $payload = json_encode(array("mensaje" => "Usuario dado de baja con exito"));
+        $usr = Usuario::withTrashed()->firstWhere('id',$id);
+
+        if(isset($usr)){
+
+          if(!$usr->trashed()){
+            $usr->delete();
+            $payload = json_encode(array("mensaje" => "Usuario desactivado con exito"));
+          } else {
+            $payload = json_encode(array("mensaje" => "El usuario ya está desactivado"));
+          }
+
+        } else {
+          $payload = json_encode(array("mensaje" => "El usuario no existe"));
+        }
 
         $response->getBody()->write($payload);
         return $response
@@ -89,10 +185,43 @@ class UsuarioController extends Usuario implements IApiUsable
     public function reactivarUno($request, $response, $args){
       $parametros = $request->getParsedBody();
 
-        $usuario = $parametros['usuario'];
-        Usuario::reactivarUsuario($usuario);
+        $id = $parametros['id'];
+        
+        $trashedUsr = Usuario::onlyTrashed()->firstWhere('id',$id);
 
-        $payload = json_encode(array("mensaje" => "Usuario reactivado con exito"));
+        if(isset($trashedUsr)){
+
+          $trashedUsr->restore();
+          $payload = json_encode(array("mensaje" => "Usuario reactivado con exito"));
+
+        } else if (Usuario::find($id) != null){
+
+          $payload = json_encode(array("mensaje" => "El usuario ya se encuentra activo"));
+
+        } else {
+
+          $payload = json_encode(array("mensaje" => "El usuario no existe"));
+
+        }
+        
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
+
+    public function borrarUno($request, $response, $args){
+        $parametros = $request->getParsedBody();
+
+        $id = $parametros['id'];
+
+        $usr = Usuario::withTrashed()->firstWhere('id',$id);
+
+        if(isset($usr)){          
+          $usr->forceDelete();
+          $payload = json_encode(array("mensaje" => "Usuario dado de baja con exito"));
+        } else {
+          $payload = json_encode(array("mensaje" => "El usuario no existe"));
+        }
 
         $response->getBody()->write($payload);
         return $response

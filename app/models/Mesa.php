@@ -9,12 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * 
  * @SuppressWarnings(PHPMD)
  */
-class Usuario extends Model
+class Mesa extends Model
 {   
     use SoftDeletes;
 
     protected $primaryKey = 'id';
-    protected $table = 'usuarios';
+    protected $table = 'mesas';
     protected $keyType = 'int';
     public $incrementing = true;
     // public $timestamps = false;
@@ -24,6 +24,18 @@ class Usuario extends Model
     const UPDATED_AT = 'fecha_modificacion';  
 
     protected $fillable = [
-        'usuario', 'clave','email', 'perfil','id_empleado'
+        'codigo', 'estado'
     ];
+
+    protected $attributes = [
+        'estado' => 'cerrada'
+    ];
+
+    static function validarCodigo($codigo){
+        return strlen($codigo) === 5 && ctype_alnum($codigo);
+    }
+    
+    static function validarEstado($estado){
+        return in_array($estado, ESTADOS_MESA);
+    }
 }

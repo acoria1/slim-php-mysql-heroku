@@ -10,6 +10,7 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
 
+
 require __DIR__ . '/../vendor/autoload.php';
 
 require_once './db/AccesoDatos.php';
@@ -17,6 +18,9 @@ require_once './middlewares/AutentificadorJWT.php';
 // require_once './middlewares/Logger.php';
 
 require_once './controllers/UsuarioController.php';
+require_once './controllers/EmpleadoController.php';
+require_once './controllers/MesaController.php';
+
 require_once './middlewares/Logger.php';
 
 // Load ENV
@@ -33,17 +37,46 @@ $app->addErrorMiddleware(true, true, true);
 // Add parse body
 $app->addBodyParsingMiddleware();
 
+//
+$app->addRoutingMiddleware();
+
+// Eloquent
+$container=$app->getContainer();
+iniciarCapsula();
+
 // Routes
-$app->group('/usuarios', function (RouteCollectorProxy $group) {
+$app->group('/api/usuarios', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UsuarioController::class . ':traerTodos');
     $group->get('/{usuario}', \UsuarioController::class . ':traerUno'); 
     // {usuario} es un arg, en postman va a ser localhost:666/usuarios/franco
     $group->post('[/]', \UsuarioController::class . ':cargarUno');
     $group->put('/modificar', UsuarioController::class . ':modificarUno');
-    $group->put('/desactivar', UsuarioController::class . ':borrarUno');
+    $group->put('/desactivar', UsuarioController::class . ':desactivarUno');
     $group->put('/reactivar', UsuarioController::class . ':reactivarUno');
+    $group->delete('/borrar', UsuarioController::class . ':borrarUno');
 
   })->add(\Logger::class . ':LogOperacion');
+
+$app->group('/api/empleados', function (RouteCollectorProxy $group) {
+  $group->get('[/]', \EmpleadoController::class . ':traerTodos');
+  $group->get('/{dni}', \EmpleadoController::class . ':traerUno'); 
+  $group->post('[/]', \EmpleadoController::class . ':cargarUno');
+  $group->put('/modificar', EmpleadoController::class . ':modificarUno');
+  $group->put('/desactivar', EmpleadoController::class . ':desactivarUno');
+  $group->put('/reactivar', EmpleadoController::class . ':reactivarUno');
+  $group->delete('/borrar', EmpleadoController::class . ':borrarUno');
+
+})->add(\Logger::class . ':LogOperacion');
+
+$app->group('/api/mesas', function (RouteCollectorProxy $group) {
+  $group->get('[/]', \MesaController::class . ':traerTodos');
+  $group->get('/{codigo}', \MesaController::class . ':traerUno'); 
+  $group->post('[/]', \MesaController::class . ':cargarUno');
+  $group->put('/modificar', MesaController::class . ':modificarUno');
+  $group->delete('/borrar', MesaController::class . ':borrarUno');
+
+});
+
 
   //acá como no es un grupo le tenemos que pasar request y response.
 $app->get('[/]', function (Request $request, Response $response) {    
