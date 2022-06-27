@@ -12,10 +12,10 @@ class AutentificadorJWT
         $ahora = time();
         $payload = array(
             'iat' => $ahora,
-            'exp' => $ahora + (60000),
+            'exp' => $ahora + (600000),
             'aud' => self::Aud(),
             'data' => $datos,
-            'app' => "Test JWT"
+            'app' => "Restaurant API"
         );
         return JWT::encode($payload, self::$claveSecreta);
     }
@@ -35,7 +35,7 @@ class AutentificadorJWT
             throw $e;
         }
         if ($decodificado->aud !== self::Aud()) {
-            throw new Exception("No es el usuario valido");
+            //throw new Exception("No es el usuario valido");
         }
     }
 
@@ -78,4 +78,5 @@ class AutentificadorJWT
 
         return sha1($aud);
     }
+
 }

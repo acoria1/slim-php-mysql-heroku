@@ -1,154 +1,231 @@
 <?php
 require_once './models/Mesa.php';
-require_once './interfaces/IApiUsable.php';
-require_once './functions/validateKeys.php';
-require_once './functions/validateValues.php';
-require_once './errors/errorMessages.php';
-require_once './exceptions/estadoMesaException.php';
-require_once './exceptions/codigoMesaException.php';
-
-
-
-use \App\Models\Mesa as Mesa;
+require_once './models/Pedido.php';
+require_once './controllers/AbstractController.php';
 
 /**
  * MesaController
  * 
- * @SuppressWarnings(PHPMD)
  */
-class MesaController implements IApiUsable
+class MesaController extends AbstractController
 {
-    public function cargarUno($request, $response, $args)
+    function __construct()
     {
-      $parametros = $request->getParsedBody();
-
-        if(key_exists('codigo',$parametros)){
-
-          $codigo = $parametros['codigo'];
-          
-          $mesaExistente = Mesa::firstWhere('codigo',$codigo);
-
-          //si no existe:
-          if(!isset($mesaExistente)){
-
-            // Creamos la mesa
-            $mesa = new Mesa();
-
-            if(Mesa::validarCodigo($codigo)){
-                $mesa->codigo = $codigo;
-                if(key_exists('estado', $parametros)){
-                    $mesa->estado = $parametros['estado'];
-                }
-
-                $mesa->save();
-
-                $payload = json_encode(array("mensaje" => "Mesa creada con exito", "ID" => $mesa->id)); 
-            } else {
-                $payload = json_encode(array("mensaje" => getCodigoError()));  
-            }
-          } else  {
-            $payload = json_encode(array("mensaje" => "La Mesa ya existe"));            
-          }
-        } else {
-          $payload = json_encode(array("mensaje" => "No se recibió código de identificacion"));
-        }
-
-      $response->getBody()->write($payload);
-      return $response
-        ->withHeader('Content-Type', 'application/json');
+      $this->controlledClass = Mesa::class;
+      $this->obligatoryParameters = ['codigo'];
     }
 
-    public function traerUno($request, $response, $args)
-    {
-        // Buscamos mesa por codigo
-        $codigo = $args['codigo'];
-        $mesa = Mesa::firstWhere('codigo',$codigo);
+    #region INFORMES
 
-        if(isset($mesa)){
-          $payload = json_encode($mesa);
-        } else {
-          $payload = json_encode(array("mensaje" => "La Mesa no existe"));
-        }
+    //USO
+    function traerMasUsada($request, $response, $args){
 
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
-    }
+      $mesas =  self::getMaxMinMesas($request, $response, $args, 'Mesa::getPorUso');
 
-    public function traerTodos($request, $response, $args)
-    {
-        $lista = Mesa::all();
-
-        $payload = json_encode(array("listaMesas" => $lista));
-
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
-    }
-    
-    public function modificarUno($request, $response, $args)
-    { 
-      $parametros = $request->getParsedBody();
-
-      $mesaId = $parametros['id'];
-
-      // Conseguimos el objeto
-      $mesa = Mesa::firstWhere('id',$mesaId);
-  
-      // Si existe
-      if (isset($mesa)) {
-
-        try {
-            if(key_exists('codigo', $parametros)){
-                if(Mesa::validarCodigo($parametros['codigo'])){
-                    $mesa->codigo = $parametros['codigo'];
-                } else {
-                    throw new codigoMesaException(getCodigoError());
-                }
-            }
-    
-            if(key_exists('estado', $parametros)){
-                if(Mesa::validarEstado($parametros['estado'])){
-                    $mesa->estado = $parametros['estado'];
-                } else {
-                    throw new estadoMesaException(getEstadoMesaError());
-                }
-            }
-
-            $mesa->save();
-            $payload = json_encode(array("mensaje" => "Mesa modificada con exito"));
-
-        } 
-        catch (Exception $ex) {
-            $payload = json_encode(array("mensaje" => $ex->getMessage()));
-        }
+      if($mesas->count() === 1){
+        $payload = json_encode(array("mesa mas usada" => $mesas));
       } else {
-        //La Mesa no existe
-        $payload = json_encode(array("mensaje" => "Mesa no encontrada"));
-      }
-  
+        $payload = json_encode(array("mesas mas usadas" => $mesas));
+      };      
+      
       $response->getBody()->write($payload);
       return $response
         ->withHeader('Content-Type', 'application/json');
     }
 
-    public function borrarUno($request, $response, $args){
-        $parametros = $request->getParsedBody();
+    function traerMenosUsada($request, $response, $args){
 
-        $id = $parametros['id'];
+      $mesas =  self::getMaxMinMesas($request, $response, $args, 'Mesa::getPorUso', 'min');
 
-        $mesa = Mesa::firstWhere('id',$id);
-
-        if(isset($mesa)){          
-          $mesa->delete();
-          $payload = json_encode(array("mensaje" => "Mesa dada de baja con exito"));
-        } else {
-          $payload = json_encode(array("mensaje" => "La Mesa no existe"));
-        }
-
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
+      if($mesas->count() === 1){
+        $payload = json_encode(array("mesa menos usada" => $mesas));
+      } else {
+        $payload = json_encode(array("mesas menos usadas" => $mesas));
+      };      
+      
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
     }
 
+    //FACTURACION 
+
+    function traerMayorFacturacion($request, $response, $args){
+
+      $mesas =  self::getMaxMinMesas($request, $response, $args, 'Mesa::getPorFacturacion');
+
+      if($mesas->count() === 1){
+        $payload = json_encode(array("mesa con mayor facturacion" => $mesas));
+      } else {
+        $payload = json_encode(array("mesas con mayor facturacion" => $mesas));
+      };      
+      
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');   
+    }
+
+    function traerMenorFacturacion($request, $response, $args){
+
+      $mesas =  self::getMaxMinMesas($request, $response, $args, 'Mesa::getPorFacturacion', 'min');
+
+      if($mesas->count() === 1){
+        $payload = json_encode(array("mesa con menor facturacion" => $mesas));
+      } else {
+        $payload = json_encode(array("mesas con menor facturacion" => $mesas));
+      };      
+      
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');   
+    }
+
+    //IMPORTE
+
+    function traerMayorImporte($request, $response, $args){
+
+      $mesas =  self::getMaxMinMesas($request, $response, $args, 'Mesa::getPorImporte');
+
+      if($mesas->count() === 1){
+        $payload = json_encode(array("mesa con mayor importe" => $mesas));
+      } else {
+        $payload = json_encode(array("mesas con mayor importe" => $mesas));
+      };      
+      
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
+    } 
+
+        
+    function traerMenorImporte($request, $response, $args){
+
+      $mesas =  self::getMaxMinMesas($request, $response, $args, 'Mesa::getPorImporte', 'min');
+
+      if($mesas->count() === 1){
+        $payload = json_encode(array("mesa con menor importe" => $mesas));
+      } else {
+        $payload = json_encode(array("mesas con menor importe" => $mesas));
+      };      
+      
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
+    } 
+
+    
+    //COMENTARIOS
+
+    function traerMejoresComentarios($request, $response, $args){
+     
+      $mesas = self::getMaxMinMesas($request, $response, $args, 'Mesa::getPorComentarios');
+
+      if($mesas->count() === 1){
+        $payload = json_encode(array("mesa con mejores comentarios" => $mesas));
+      } else {
+        $payload = json_encode(array("mesas con mejores comentarios" => $mesas));
+      };      
+      
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');    
+    } 
+
+        
+    function traerPeoresComentarios($request, $response, $args){
+
+      $mesas = self::getMaxMinMesas($request, $response, $args, 'Mesa::getPorComentarios','min');
+
+      if($mesas->count() === 1){
+        $payload = json_encode(array("mesa con peores comentarios" => $mesas));
+      } else {
+        $payload = json_encode(array("mesas con peores comentarios" => $mesas));
+      };      
+      
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
+    } 
+
+    function traerFacturacionTodas($request, $response, $args){
+      $parametros = $request->getParsedBody();
+
+      //default
+      $fechaInicio = Carbon\Carbon::minValue();
+      $fechaFin = Carbon\Carbon::maxValue();
+
+      if(isset($parametros)){
+        $fechas = setFechasInicioFin($parametros);
+        if(isset($fechas)){
+          $fechaInicio = $fechas[0]->format('Y-m-d');
+          $fechaFin = $fechas[1]->format('Y-m-d');
+        }
+      }
+
+      $mesas = Mesa::getTodasPorFacturacion($fechaInicio, $fechaFin);
+
+      $payload = json_encode(array("mesas" => $mesas));
+
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
+    }
+
+    function traerFacturacionUna($request, $response, $args){
+      $id = $args['id'];
+
+      $parametros = $request->getParsedBody();
+
+      //default
+      $fechaInicio = Carbon\Carbon::minValue();
+      $fechaFin = Carbon\Carbon::maxValue();
+
+      if(isset($parametros)){
+        $fechas = setFechasInicioFin($parametros);
+        if(isset($fechas)){
+          $fechaInicio = $fechas[0]->format('Y-m-d');
+          $fechaFin = $fechas[1]->format('Y-m-d');
+        }
+      }
+
+      $mesa = Mesa::getUnaPorFacturacion($id,$fechaInicio, $fechaFin);
+
+      $payload = json_encode(array("facturacion" => $mesa));
+
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * getMaxMinMesas devuelve todas las mesas que tengan mayor o menor de algo.
+     * 
+     * @param $request
+     * @param $response
+     * @param $args
+     * @param $anonFunc Funcion a usar para ejecutar la query deseada
+     * @param $keyDescription el nombre que usaremos para el mensaje de devolución
+     * @param $maxOrMin 'max' by default, or 'min'
+     */
+    static function getMaxMinMesas($request, $response, $args, $anonFunc, $maxOrMin = 'max'){
+      $parametros = $request->getParsedBody();
+
+      //default
+      $fechaInicio = Carbon\Carbon::minValue();
+      $fechaFin = Carbon\Carbon::maxValue();
+
+      if(isset($parametros)){
+        $fechas = setFechasInicioFin($parametros);
+        if(isset($fechas)){
+          $fechaInicio = $fechas[0]->format('Y-m-d');
+          $fechaFin = $fechas[1]->format('Y-m-d');
+        }
+      }  
+
+      $mesas = $anonFunc($fechaInicio,$fechaFin,$maxOrMin);
+
+      return $mesas;
+    }
+
+  #endregion
 }

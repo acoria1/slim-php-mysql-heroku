@@ -12,6 +12,16 @@
 				{
 					"name": "Crear Usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -19,23 +29,43 @@
 							"formdata": [
 								{
 									"key": "usuario",
-									"value": "agustin",
+									"value": "CERVECERO1",
 									"type": "text"
 								},
 								{
 									"key": "clave",
-									"value": "jojo321",
+									"value": "dni1@@_JK",
 									"type": "text"
+								},
+								{
+									"key": "perfil",
+									"value": "cervecero",
+									"type": "text"
+								},
+								{
+									"key": "empleado_id",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "cervecero123@ghot.com",
+									"type": "text"
+								},
+								{
+									"key": "dsad",
+									"value": "",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:666/usuarios/",
-							"protocol": "http",
+							"raw": "{{URL}}/usuarios/",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
 								"usuarios",
 								""
@@ -46,31 +76,31 @@
 				},
 				{
 					"name": "Traer Todos Los Usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "usuario",
-									"value": "agustin",
-									"type": "text"
-								},
-								{
-									"key": "clave",
-									"value": "jojo321",
-									"type": "text"
+									"key": "token",
+									"value": "{{TOKEN_CERVECERO}}",
+									"type": "string"
 								}
 							]
 						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
 						"url": {
-							"raw": "http://localhost:666/usuarios/",
-							"protocol": "http",
+							"raw": "{{URL}}/usuarios/",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
 								"usuarios",
 								""
@@ -85,33 +115,56 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "usuario",
-									"value": "agustin",
-									"type": "text"
-								},
-								{
-									"key": "clave",
-									"value": "jojo321",
-									"type": "text"
-								}
-							]
+							"formdata": []
 						},
 						"url": {
-							"raw": "http://localhost:666/usuarios/ACORIA",
-							"protocol": "http",
+							"raw": "{{URL}}/usuarios/59",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
 								"usuarios",
-								"ACORIA"
+								"59"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Un Usuario Con Empleado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/usuarios/extendido/3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"extendido",
+								"3"
 							]
 						}
 					},
@@ -120,40 +173,55 @@
 				{
 					"name": "Modificar Usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_SOCIO}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "usuario",
-									"value": "ACORIA",
+									"key": "id",
+									"value": "66",
 									"type": "text"
 								},
 								{
-									"key": "nuevaClave",
-									"value": "124jdoqp",
+									"key": "clave",
+									"value": "241  12C",
 									"type": "text"
 								},
 								{
 									"key": "perfil",
-									"value": "socio",
+									"value": "bartender",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "empleado_id",
+									"value": "5",
 									"type": "text"
 								},
 								{
-									"key": "id_empleado",
-									"value": "3",
-									"type": "text"
+									"key": "email",
+									"value": "aaa@asdo.com",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:666/usuarios/modificar",
-							"protocol": "http",
+							"raw": "{{URL}}/usuarios/modificar",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
 								"usuarios",
 								"modificar"
@@ -171,34 +239,17 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "usuario",
-									"value": "ACORIA",
-									"type": "text"
-								},
-								{
-									"key": "nuevaClave",
-									"value": "124jdoqp",
-									"type": "text"
-								},
-								{
-									"key": "perfil",
-									"value": "socio",
-									"type": "text"
-								},
-								{
-									"key": "id_empleado",
-									"value": "3",
+									"key": "id",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:666/usuarios/desactivar",
-							"protocol": "http",
+							"raw": "{{URL}}/usuarios/desactivar",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
 								"usuarios",
 								"desactivar"
@@ -216,37 +267,112 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "usuario",
-									"value": "ACORIA",
-									"type": "text"
-								},
-								{
-									"key": "nuevaClave",
-									"value": "124jdoqp",
-									"type": "text"
-								},
-								{
-									"key": "perfil",
-									"value": "socio",
-									"type": "text"
-								},
-								{
-									"key": "id_empleado",
-									"value": "3",
+									"key": "id",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:666/usuarios/reactivar",
-							"protocol": "http",
+							"raw": "{{URL}}/usuarios/reactivar",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
 								"usuarios",
 								"reactivar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "19",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/usuarios/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Regenerar Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/usuarios/regenerarToken",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"regenerarToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Nuevo Token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "usuario",
+									"value": "COCINERO1",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "dni1@@_JK",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/usuarios/crearNuevoToken",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"crearNuevoToken"
 							]
 						}
 					},
@@ -255,10 +381,10 @@
 			]
 		},
 		{
-			"name": "JWT",
+			"name": "Empleados",
 			"item": [
 				{
-					"name": "Crear Token Post",
+					"name": "Crear Empleado",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -266,46 +392,2265 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "usuario",
-									"value": "acoria",
+									"key": "nombre",
+									"value": "Ignacio",
 									"type": "text"
 								},
 								{
-									"key": "perfil",
-									"value": "user",
+									"key": "apellido",
+									"value": "Coria",
 									"type": "text"
 								},
 								{
-									"key": "alias",
-									"value": "cesni186",
+									"key": "rol",
+									"value": "socio",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "12415134",
+									"type": "text"
+								},
+								{
+									"key": "fecha_nacimiento",
+									"value": "1995-4-4",
+									"type": "text"
+								},
+								{
+									"key": "direccion",
+									"value": "Arredonodo 1263, CABA, Buenos Aires",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "das3r51rgf6@gmail.com",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:666/jwt/crearToken",
-							"protocol": "http",
+							"raw": "{{URL}}/empleados/",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
-								"jwt",
-								"crearToken"
+								"empleados",
+								""
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "devolver payload",
+					"name": "Traer Todos los Empleados",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTQ1NTMwOTUsImV4cCI6MTY1NDYxMzA5NSwiYXVkIjoiOWE2YWI1YzI0Y2IzNTY1ZTUyZjQzNmVlNTU0Nzk1NTQ3MjAyNDIwMSIsImRhdGEiOnsidXN1YXJpbyI6ImFjb3JpYSIsInBlcmZpbCI6InVzZXIiLCJhbGlhcyI6ImNlc25pMTg2In0sImFwcCI6IlRlc3QgSldUIn0.7rnEbkIhNnqBmhlvXVEKLXgIIUjhjClELq3UsymTwg8",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTYyODIxNTYsImV4cCI6MTY1Njg4MjE1NiwiYXVkIjoiOWE2YWI1YzI0Y2IzNTY1ZTUyZjQzNmVlNTU0Nzk1NTQ3MjAyNDIwMSIsImRhdGEiOnsidXN1YXJpbyI6IkFTREg0MzFHRSIsImNsYXZlIjoiZmVxMTEyMEExQEAiLCJlbWFpbCI6InRlczEzMzJyMkBnaG90LmNvbSJ9LCJhcHAiOiJSZXN0YXVyYW50IEFQSSJ9.jQpHOQ3zV-KAprfuFAxACXCzQ5MgTHTbBDxlENs30rs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/empleados/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"empleados",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Un Empleado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/empleados/19",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"empleados",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer uno con usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/empleados/extendido/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"empleados",
+								"extendido",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Empleado",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "14",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "dasfrqw#D1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "dni",
+									"value": "33232311",
+									"type": "text"
+								},
+								{
+									"key": "id_empleado",
+									"value": "5",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "aaa@asdo.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "asfg",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/empleados/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"empleados",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desactivar Empleado",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/empleados/desactivar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"empleados",
+								"desactivar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reactivar Empleado",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/empleados/reactivar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"empleados",
+								"reactivar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Empleado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "14",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/empleados/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"empleados",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mesas",
+			"item": [
+				{
+					"name": "Crear Mesa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "FQ12D",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "reservada",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "d",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/mesas/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"mesas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer todas las Mesas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/mesas/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"mesas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer una Mesa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/mesas/19",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"mesas",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Mesa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "19",
+									"type": "text"
+								},
+								{
+									"key": "codigo",
+									"value": "124CD",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "con cliente esperando pedido",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/mesas/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"mesas",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Mesa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "20",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/mesas/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"mesas",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Encuestas",
+			"item": [
+				{
+					"name": "Crear Encuesta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "general_puntaje",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "mesa_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "mesa_puntaje",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "mozo_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "mozo_puntaje",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "comida_puntaje",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Muy buen servicio aunque un poco caro para la cantidad de comida",
+									"type": "text"
+								},
+								{
+									"key": "s",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/encuestas/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"encuestas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer encuestas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/encuestas/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"encuestas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer una encuesta",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/encuestas/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"encuestas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar encuesta",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "general_puntaje",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/encuestas/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"encuestas",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Encuesta",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "20",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/encuestas/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"encuestas",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Platos",
+			"item": [
+				{
+					"name": "Crear Plato",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Milanesa napolitana",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Milanesa napolitana",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "16",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "1100.99",
+									"type": "text"
+								},
+								{
+									"key": "apto_veganos",
+									"value": "NO",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "adsdaff",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/platos/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"platos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer todos los platos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/platos/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"platos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer un plato",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/platos/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"platos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Plato",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Lomo con ensalada",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Bife de Lomo 200gr. con ensalada de tomate, lechuga, cebolla cruda, zanahoria, huevo.",
+									"type": "text"
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "24",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "1679",
+									"type": "text"
+								},
+								{
+									"key": "apto_veganos",
+									"value": "NO",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/platos/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"platos",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Plato",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/platos/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"platos",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Postres",
+			"item": [
+				{
+					"name": "Crear Postre",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Panqueues con dulce de leche",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Panqueues con dulce de leche",
+									"type": "text"
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "980",
+									"type": "text"
+								},
+								{
+									"key": "apto_veganos",
+									"value": "Y",
+									"type": "text"
+								},
+								{
+									"key": "adsdaff",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/postres/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"postres",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer todos los postres",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/postres/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"postres",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer un postre",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/postres/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"postres",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Postre",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Volcan Chocolate",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Volcan de Chocolate hecho en el momento",
+									"type": "text"
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "890",
+									"type": "text"
+								},
+								{
+									"key": "apto_celiacos",
+									"value": "Y",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/postres/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"postres",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Postre",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/postres/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"postres",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bebidas",
+			"item": [
+				{
+					"name": "Crear Bebida",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Martini Seco",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Martini Seco con aceitunas y limon",
+									"type": "text"
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "499",
+									"type": "text"
+								},
+								{
+									"key": "mililitros",
+									"value": "400",
+									"type": "text"
+								},
+								{
+									"key": "adsdaff",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/bebidas/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bebidas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer todas las bebidas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/bebidas/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bebidas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer una bebida",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/bebidas/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bebidas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Bebida",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Martini Classic ",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Bife de Lomo 200gr. con ensalada de tomate, lechuga, cebolla cruda, zanahoria, huevo.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "549",
+									"type": "text"
+								},
+								{
+									"key": "apto_veganos",
+									"value": "NO",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/bebidas/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bebidas",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Bebida",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/bebidas/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"bebidas",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cervezas",
+			"item": [
+				{
+					"name": "Crear Cerveza",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Perro Rabioso",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "APA americana con notas de frutos rojos y acidez",
+									"type": "text"
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "399",
+									"type": "text"
+								},
+								{
+									"key": "mililitros",
+									"value": "500",
+									"type": "text"
+								},
+								{
+									"key": "porcentaje_alcohol",
+									"value": "6.2",
+									"type": "text"
+								},
+								{
+									"key": "variedad",
+									"value": "APA",
+									"type": "text"
+								},
+								{
+									"key": "dasd",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/cervezas/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cervezas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer todas las cervezas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/cervezas/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cervezas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer una cerveza",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/cervezas/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cervezas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Cerveza",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "descripcion",
+									"value": "Bife de Lomo 200gr. con ensalada de tomate, lechuga, cebolla cruda, zanahoria, huevo.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "549",
+									"type": "text"
+								},
+								{
+									"key": "apto_veganos",
+									"value": "NO",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/cervezas/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cervezas",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Bebida",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/cervezas/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cervezas",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vinos",
+			"item": [
+				{
+					"name": "Crear Vino",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Las Cumbres 2019",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Vino rojizo de uva americana con notas de frutos rojos y notas de vainilla y cedro",
+									"type": "text"
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "380",
+									"type": "text"
+								},
+								{
+									"key": "mililitros",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "porcentaje_alcohol",
+									"value": "11.9",
+									"type": "text"
+								},
+								{
+									"key": "tipo_uva",
+									"value": "Cabernet Sauvignon",
+									"type": "text"
+								},
+								{
+									"key": "dasd",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/vinos/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"vinos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer todos los vinos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/vinos/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"vinos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer un vino",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/vinos/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"vinos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Vino",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "descripcion",
+									"value": "Bife de Lomo 200gr. con ensalada de tomate, lechuga, cebolla cruda, zanahoria, huevo.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "549",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/vinos/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"vinos",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Vino",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/vinos/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"vinos",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tragos",
+			"item": [
+				{
+					"name": "Crear Trago",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Gin Tonic Absolute",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Gin and Tonic con mix de absolute de limon",
+									"type": "text"
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "590",
+									"type": "text"
+								},
+								{
+									"key": "mililitros",
+									"value": "250",
+									"type": "text"
+								},
+								{
+									"key": "porcentaje_alcohol",
+									"value": "14.4",
+									"type": "text"
+								},
+								{
+									"key": "variedad",
+									"value": "APA",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "dasd",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/tragos/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tragos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer todos los tragos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/tragos/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tragos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer un  trago",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/tragos/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tragos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Trago",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "descripcion",
+									"value": "Bife de Lomo 200gr. con ensalada de tomate, lechuga, cebolla cruda, zanahoria, huevo.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "minutos_de_preparacion",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "549",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "apto_veganos",
+									"value": "NO",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/tragos/modificar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tragos",
+								"modificar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Trago",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/tragos/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tragos",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Proceso entero del pedido 1",
+					"item": [
+						{
+							"name": "Crear Pedido Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"mesa_id\": 8,\r\n  \"mozo_id\": 15,\r\n  \"detalles_pedido\": [\r\n    {\r\n      \"consumible_id\": 1,\r\n      \"consumible_tipo\": \"bebida\"\r\n    },\r\n    {\r\n      \"consumible_id\": 1,\r\n      \"consumible_tipo\": \"plato\"\r\n    },\r\n    {\r\n      \"consumible_id\": 1,\r\n      \"consumible_tipo\": \"postre\"\r\n    },\r\n    {\r\n      \"consumible_id\": 1,\r\n      \"consumible_tipo\": \"trago\"\r\n    }\r\n    ,\r\n    {\r\n      \"consumible_id\": 1,\r\n      \"consumible_tipo\": \"vino\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Agregar Items al pedido",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 46,\r\n  \"detalles_pedido\": [\r\n    {\r\n      \"consumible_id\": 3,\r\n      \"consumible_tipo\": \"cerveza\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/agregarItems",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"agregarItems"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Agregar foto Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "46",
+											"type": "text"
+										},
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/Users/agusi/Desktop/UTN/ACTUALES/LAB 3/ACORIA PP 3B NOCHE/imagenes/car-logo.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/foto",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"foto"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Preparar Item Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id",
+											"value": "62",
+											"type": "text"
+										},
+										{
+											"key": "minutos",
+											"value": "20",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/prepararItem",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"prepararItem"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Tiempo de Espera Copy",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "codigo_mesa",
+											"value": "CO1R2",
+											"type": "text"
+										},
+										{
+											"key": "pedido",
+											"value": "X2J45",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/consultas/tiempoDeEspera",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"consultas",
+										"tiempoDeEspera"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancelar Item Copy",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id",
+											"value": "62",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/cancelarItem",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"cancelarItem"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Finalizar Item Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id",
+											"value": "61",
+											"type": "text"
+										},
+										{
+											"key": "minutos",
+											"value": "20",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/finalizarItem",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"finalizarItem"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Servir Pedido Copy",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id",
+											"value": "46",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/servir",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"servir"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pagar Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "id",
+											"value": "46",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/pagar",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"pagar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Crear Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mesa_id\": 5,\r\n  \"mozo_id\": 3,\r\n  \"detalles_pedido\": [\r\n    {\r\n      \"consumible_id\": 1,\r\n      \"consumible_tipo\": \"bebida\",\r\n      \"cantidad\": 4\r\n    },\r\n    {\r\n      \"consumible_id\": 2,\r\n      \"consumible_tipo\": \"cerveza\",\r\n      \"cantidad\": 6\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar Items al pedido Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 67,\r\n  \"detalles_pedido\": [\r\n    {\r\n      \"consumible_id\": 1,\r\n      \"consumible_tipo\": \"vino\",\r\n      \"cantidad\": 3\r\n    },\r\n    {\r\n      \"consumible_id\": 1,\r\n      \"consumible_tipo\": \"postre\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/agregarItems",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"agregarItems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Uno",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/pedidos/46",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"46"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tiempo de Espera",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "codigo_mesa",
+									"value": "AFGT1",
+									"type": "text"
+								},
+								{
+									"key": "pedido",
+									"value": "PM4Q1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pedido",
+									"value": "8ZOTR",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/consultas/tiempoDeEspera",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"consultas",
+								"tiempoDeEspera"
+							],
+							"query": [
+								{
+									"key": "codigo_mesa",
+									"value": "AFGT1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Uno Completo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -313,79 +2658,1503 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:666/jwt/devolverPayLoad",
-							"protocol": "http",
+							"raw": "{{URL}}/pedidos/extendido/12",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
-								"jwt",
-								"devolverPayLoad"
+								"pedidos",
+								"extendido",
+								"12"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "devolver data",
+					"name": "cancelar",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
-									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTQ1NTMwOTUsImV4cCI6MTY1NDYxMzA5NSwiYXVkIjoiOWE2YWI1YzI0Y2IzNTY1ZTUyZjQzNmVlNTU0Nzk1NTQ3MjAyNDIwMSIsImRhdGEiOnsidXN1YXJpbyI6ImFjb3JpYSIsInBlcmZpbCI6InVzZXIiLCJhbGlhcyI6ImNlc25pMTg2In0sImFwcCI6IlRlc3QgSldUIn0.7rnEbkIhNnqBmhlvXVEKLXgIIUjhjClELq3UsymTwg8",
-									"type": "string"
+									"key": "id",
+									"value": "40",
+									"type": "text"
 								}
 							]
 						},
-						"method": "GET",
-						"header": [],
 						"url": {
-							"raw": "http://localhost:666/jwt/devolverDatos",
-							"protocol": "http",
+							"raw": "{{URL}}/pedidos/cancelar",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
-								"jwt",
-								"devolverDatos"
+								"pedidos",
+								"cancelar"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "verificar token",
+					"name": "pagar",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTQ1NTMwOTUsImV4cCI6MTY1NDYxMzA5NSwiYXVkIjoiOWE2YWI1YzI0Y2IzNTY1ZTUyZjQzNmVlNTU0Nzk1NTQ3MjAyNDIwMSIsImRhdGEiOnsidXN1YXJpbyI6ImFjb3JpYSIsInBlcmZpbCI6InVzZXIiLCJhbGlhcyI6ImNlc25pMTg2In0sImFwcCI6IlRlc3QgSldUIn0.7rnEbkIhNnqBmhlvXVEKLXgIIUjhjClELq3UsymTwg8",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "40",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/pagar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"pagar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar foto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "41",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/agusi/Desktop/UTN/ACTUALES/LAB 3/ACORIA PP 3B NOCHE/imagenes/bugatti-background.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/foto",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Servir Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "40",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/servir",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"servir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Pedido",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "46",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/borrar",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "76",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/cancelarItem",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"cancelarItem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Preparar Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "44",
+									"type": "text"
+								},
+								{
+									"key": "minutos",
+									"value": "14",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/prepararItem",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"prepararItem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finalizar Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "44",
+									"type": "text"
+								},
+								{
+									"key": "minutos",
+									"value": "20",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/pedidos/finalizarItem",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"pedidos",
+								"finalizarItem"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exports",
+			"item": [
+				{
+					"name": "Export Bebidas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/bebidas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"bebidas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Cervezas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/cervezas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"cervezas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export empleados",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
 						"url": {
-							"raw": "http://localhost:666/jwt/verificarToken",
-							"protocol": "http",
+							"raw": "{{URL}}/exports/empleados",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "666",
 							"path": [
-								"jwt",
-								"verificarToken"
+								"exports",
+								"empleados"
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Export Mesas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/mesas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"mesas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Pedidos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/pedidos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export platos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/platos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"platos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export postres",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/postres",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"postres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export tragos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/tragos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"tragos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/usuarios",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Vinos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/vinos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"vinos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export encuestas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/exports/encuestas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"exports",
+								"encuestas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Imports",
+			"item": [
+				{
+					"name": "Import Bebidas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/bebidas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"bebidas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Cervezas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/xampp/htdocs/Programacion_3/Test/Cervezas.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/cervezas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"cervezas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import empleados",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/xampp/htdocs/Programacion_3/slim-php-heroku-acoria/app/Test/MOCK_DATA_EMPLEADOS.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/empleados",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"empleados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Mesas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/mesas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"mesas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Pedidos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/pedidos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "imports platos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/platos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"platos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "imports postres",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/postres",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"postres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "imports tragos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/tragos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"tragos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "imports Usuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/xampp/htdocs/Programacion_3/Test/Usuarios.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/usuarios",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "imports Vinos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/vinos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"vinos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "imports encuestas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/xampp/htdocs/Programacion_3/slim-php-heroku-acoria/app/Test/MOCK_DATA_ENCUESTAS.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/imports/encuestas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"imports",
+								"encuestas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Informes",
+			"item": [
+				{
+					"name": "Empleados",
+					"item": [
+						{
+							"name": "Empleados fechas de ingreso",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN_ADMIN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "fecha_min",
+											"value": "26/06/2022",
+											"type": "text"
+										},
+										{
+											"key": "fecha_max",
+											"value": "27/06/2022",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "fecha",
+											"value": "25/06/2022",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/empleados/informes/fechasIngreso",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"empleados",
+										"informes",
+										"fechasIngreso"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Operaciones Por Sector",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN_ADMIN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "fecha_min",
+											"value": "24/06/2022",
+											"type": "text"
+										},
+										{
+											"key": "fecha_max",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "fecha",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/empleados/informes/operaciones/sector",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"empleados",
+										"informes",
+										"operaciones",
+										"sector"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Operaciones Por Sector Copy",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN_ADMIN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "fecha_min",
+											"value": "14/06/2022",
+											"type": "text"
+										},
+										{
+											"key": "fecha_max",
+											"value": "12/12/2022",
+											"type": "text"
+										},
+										{
+											"key": "fecha",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/empleados/informes/operaciones/sector/empleados",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"empleados",
+										"informes",
+										"operaciones",
+										"sector",
+										"empleados"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Operaciones de un empleado por fechas",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN_ADMIN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "fecha_min",
+											"value": "14/06/2022",
+											"type": "text"
+										},
+										{
+											"key": "fecha_max",
+											"value": "28/06/2022",
+											"type": "text"
+										},
+										{
+											"key": "fecha",
+											"value": "20/06/2022",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/empleados/informes/operaciones/5",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"empleados",
+										"informes",
+										"operaciones",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Mesas",
+					"item": [
+						{
+							"name": "mas usada",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/masUsada",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"masUsada"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "menos usada",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/menosUsada",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"menosUsada"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mas facturacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/mayorFacturacion",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"mayorFacturacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "menor facturacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/menorFacturacion",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"menorFacturacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mayor importe",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/mayorImporte",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"mayorImporte"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "menor importe",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/menorImporte",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"menorImporte"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mejores comentarios",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/mejoresComentarios",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"mejoresComentarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "peores comentarios",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/peoresComentarios",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"peoresComentarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "traer todas por facturacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/facturacionPorFechas",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"facturacionPorFechas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "traer una con facturacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/mesas/informes/facturacionPorFechas/5",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"mesas",
+										"informes",
+										"facturacionPorFechas",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pedidos",
+					"item": [
+						{
+							"name": "mas vendido",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/pedidos/informes/masVendido",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"informes",
+										"masVendido"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "menos vendido",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/pedidos/informes/menosVendido",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"informes",
+										"menosVendido"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "atrasados",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "fecha",
+											"value": "20/06/2022",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/pedidos/informes/atrasados",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"informes",
+										"atrasados"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cancelados",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/pedidos/informes/cancelados",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"pedidos",
+										"informes",
+										"cancelados"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
